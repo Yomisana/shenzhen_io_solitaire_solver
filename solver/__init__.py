@@ -212,13 +212,14 @@ def auto():
     print("  Press Q to force quit") 
     print()
     
-    for i in range(completed_games, TOTAL_GAMES):
+    
+    while completed_games < TOTAL_GAMES:
         if should_exit.is_set():
             print(f"\n⚠ Quit by user - completed {completed_games} games")
             break
-            
-        remaining = TOTAL_GAMES - i
-        print(f"🔄 Playing game {i+1}/{TOTAL_GAMES} (remaining {remaining} games)")
+
+        remaining = TOTAL_GAMES - completed_games
+        print(f"🔄 Playing game {completed_games+1}/{TOTAL_GAMES} (remaining {remaining} games)")
         try:
             click(newgame[0], newgame[1])
             time.sleep(6)
@@ -236,18 +237,18 @@ def auto():
             
             if should_exit.is_set():
                 break
-                
+
             # Update progress after successful game
             completed_games += 1
             save_progress(completed_games)
-            print(f"✓ Finished game {i+1}/{TOTAL_GAMES} ({move_count} moves) - Progress: {completed_games}/{TOTAL_GAMES}")
+            print(f"✓ Finished game {completed_games}/{TOTAL_GAMES} ({move_count} moves) - Progress: {completed_games}/{TOTAL_GAMES}")
             time.sleep(6)
             
         except KeyboardInterrupt:
             print(f"\n⚠ Interrupted by user")
             break
         except Exception as e:
-            print(f"✗ Error in game {i+1}: {e}")
+            print(f"✗ Error in game {completed_games+1}: {e}")
             continue
     
     if not should_exit.is_set() and completed_games == TOTAL_GAMES:
