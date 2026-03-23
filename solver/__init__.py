@@ -73,6 +73,7 @@ def init_window():
 def cleanup():
     """Cleanup function called on exit"""
     print("\n✓ Solver exiting cleanly...")
+
 def screengrab():
     init_window()
     win.set_focus()
